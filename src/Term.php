@@ -128,24 +128,6 @@ class Term extends CoreEntity
 
     /**
      * @internal
-     * @return integer
-     */
-    protected function get_term_from_query()
-    {
-        global $wp_query;
-        if (isset($wp_query->queried_object)) {
-            $qo = $wp_query->queried_object;
-            if (isset($qo->term_id)) {
-                return $qo->term_id;
-            }
-        }
-        if (isset($wp_query->tax_query->queries[0]['terms'][0])) {
-            return $wp_query->tax_query->queries[0]['terms'][0];
-        }
-    }
-
-    /**
-     * @internal
      * @param \WP_Term $term
      */
     protected function init(WP_Term $term)
