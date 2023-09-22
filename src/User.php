@@ -414,6 +414,23 @@ class User extends CoreEntity
     }
 
     /**
+     * Determines if the user object is for the current logged-in user.
+     *
+     * @api
+     * @example
+     * ```twig
+     * {% if user.is_current_user %}
+     *     <a href="{{ user.profile_link }}">My profile</a>
+     * {% endif %}
+     * ```
+     * @return bool
+     */
+    public function is_current_user(): bool
+    {
+        return $this->ID === \get_current_user_id();
+    }
+
+    /**
      * Gets the edit link for a user if the current user has the correct rights or the profile link for the current
      * user.
      *
@@ -443,6 +460,27 @@ class User extends CoreEntity
             return null;
         }
 
+        return \get_edit_user_link($this->ID);
+    }
+
+    /**
+     * Gets the profile link for the current user.
+     *
+     * @api
+     * @example
+     * ```twig
+     * {% if user.is_current_user %}
+     *     <a href="{{ user.profile_link }}">My profile</a>
+     * {% endif %}
+     * ```
+     * @return string|null The profile link if the user object is for the current user. Null otherwise.
+     */
+    public function profile_link(): ?string
+    {
+        if (!$this->is_current_user()) {
+            return null;
+        }
+        
         return \get_edit_user_link($this->ID);
     }
 
